@@ -1,0 +1,14 @@
+import requests
+
+url = "https://facebook-reel-and-video-downloader.p.rapidapi.com/app/main.php"
+
+querystring = {"url":"https://www.facebook.com/reel/1187362698778788"}
+
+headers = {
+	"X-RapidAPI-Key": "dd1582884cmsh424c8508c4933b1p1ab7bbjsnfcd1701bcb84",
+	"X-RapidAPI-Host": "facebook-reel-and-video-downloader.p.rapidapi.com"
+}
+
+response = requests.request("GET", url, headers=headers, params=querystring)
+
+print(response.text)
