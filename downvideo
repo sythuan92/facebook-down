@@ -1,14 +1,46 @@
 import requests
+import json
+import random
+import re
+from random import randint
+import datetime
+import time
 
-url = "https://facebook-reel-and-video-downloader.p.rapidapi.com/app/main.php"
+def downloadvideo(querystring):
+    url = "https://facebook-reel-and-video-downloader.p.rapidapi.com/app/main.php"
+    print(querystring)
+    querystrings = {"url":querystring}
+    querystringss = {"url":"https://www.facebook.com/reel/1168844177326044"}
+    headers = {
+        "X-RapidAPI-Key": "ea6af364dbmshfe291a6ddf3f02dp1fc2cbjsn055fe007e024",
+        "X-RapidAPI-Host": "facebook-reel-and-video-downloader.p.rapidapi.com"
+    }
 
-querystring = {"url":"https://www.facebook.com/reel/1187362698778788"}
+    response = requests.request("GET", url, headers=headers, params=querystrings)
+    
+    videos=response.text
+    video = videos.replace('{',"")
+    
+    
+    link = re.findall(r'"Download High Quality":"([^"]+)"',videos)
+    url_video="".join(link)
+    names =random.randrange(1,9000)
+    today = datetime.datetime.now().strftime("%Y-%m-%d")
+    name = today+"video"+str(names)+".mp4"
+    print("----------------------------------------------------------------------------")
+    r = requests.get(url_video)
+    with open(name, "wb") as f:
+        f.write(r.content)
 
-headers = {
-	"X-RapidAPI-Key": "dd1582884cmsh424c8508c4933b1p1ab7bbjsnfcd1701bcb84",
-	"X-RapidAPI-Host": "facebook-reel-and-video-downloader.p.rapidapi.com"
-}
 
-response = requests.request("GET", url, headers=headers, params=querystring)
+list_links = ["https://www.facebook.com/reel/722408283001138",
+"https://www.facebook.com/reel/2628012977338413",
+"https://www.facebook.com/reel/905119350941815",
+"https://www.facebook.com/reel/1616198162159084",
+"https://www.facebook.com/reel/491033289638193"]
 
-print(response.text)
+
+if __name__ == "__main__":
+    for linkk in list_links:
+        down= downloadvideo(linkk)
+        time.sleep(3)
