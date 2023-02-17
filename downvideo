@@ -5,6 +5,7 @@ import re
 from random import randint
 import datetime
 import time
+from openpyxl import load_workbook
 
 def downloadvideo(querystring):
     url = "https://facebook-reel-and-video-downloader.p.rapidapi.com/app/main.php"
@@ -33,11 +34,9 @@ def downloadvideo(querystring):
         f.write(r.content)
 
 
-list_links = ["https://www.facebook.com/reel/722408283001138",
-"https://www.facebook.com/reel/2628012977338413",
-"https://www.facebook.com/reel/905119350941815",
-"https://www.facebook.com/reel/1616198162159084",
-"https://www.facebook.com/reel/491033289638193"]
+list_links = load_workbook('ten_file.xlsx')['ten_sheet']['A1'].value
+
+
 
 
 if __name__ == "__main__":
