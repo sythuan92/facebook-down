@@ -3,15 +3,16 @@ import json
 import random
 import re
 from random import randint
-import datetime
+# import datetime
 import time
 from openpyxl import load_workbook
+import sys
 
 def downloadvideo(querystring):
     url = "https://facebook-reel-and-video-downloader.p.rapidapi.com/app/main.php"
     print(querystring)
     querystrings = {"url":querystring}
-    querystringss = {"url":"https://www.facebook.com/reel/1168844177326044"}
+    
     headers = {
         "X-RapidAPI-Key": "ea6af364dbmshfe291a6ddf3f02dp1fc2cbjsn055fe007e024",
         "X-RapidAPI-Host": "facebook-reel-and-video-downloader.p.rapidapi.com"
@@ -25,19 +26,20 @@ def downloadvideo(querystring):
     
     link = re.findall(r'"Download High Quality":"([^"]+)"',videos)
     url_video="".join(link)
-    names =random.randrange(1,9000)
-    today = datetime.datetime.now().strftime("%Y-%m-%d")
-    name = today+"video"+str(names)+".mp4"
+    names =querystring.split("/")[-1]
+    # today = datetime.datetime.now().strftime("%Y-%m-%d")
+    name = str(names)+".mp4"
     print("----------------------------------------------------------------------------")
-    r = requests.get(url_video)
-    with open(name, "wb") as f:
-        f.write(r.content)
+	# print(name)
+    # r = requests.get(url_video)
+    # with open(name, "wb") as f:
+    #     f.write(r.content)
 
-
-list_links = load_workbook('ten_file.xlsx')['ten_sheet']['A1'].value
-
-
-
+nhapgiatri = input("Bạn đã nhập link vào excel chưa Y/n:"+"\r\n")
+if nhapgiatri == "Y":
+	list_links = load_workbook('import-fb-link.xlsx')['xuli']['A1'].value
+else:
+	sys.exit()
 
 if __name__ == "__main__":
     for linkk in list_links:
